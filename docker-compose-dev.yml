@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+
+    web:
+        # image: pavelsr/dashboard_server
+        build: .
+        volumes:
+          - ${PWD}:/root/www/
+        working_dir: /root/www
+        command: [ "morbo", "-v", "-w", "app-dashboard.conf", "-w", "lib", "-w", "templates", "-w", "public", "./script/app_dashboard" ]
+        ports:
+            - "3050:3000"
+        environment:
+            - QUEUE_DB_URI=mysql://root:toor@mysql/minion_jobs
+        depends_on:
+            # - mongo
+            # - postgres
+            - mysql
+            # - mariadb
+
+    # mongo:
+    #     image: mongo
+    #     # hostname: mongo_dashboard1
+    #
+    # postgres:
+    #     image: postgres
+    #     # hostname: postgres_dashboard
+
+    mysql:
+        image: mysql:5
+        # hostname: mysql_dashboard
+        environment:
+            # - MYSQL_USER=resu
+            # - MYSQL_PASSWORD=user
+            # - MYSQL_RANDOM_ROOT_PASSWORD=1
+            - MYSQL_ROOT_PASSWORD=toor
+            - MYSQL_DATABASE=minion_jobs
+            # - MYSQL_ALLOW_EMPTY_PASSWORD=1
+
+    # mariadb:
+    #     image: mariadb
+    #     # hostname: mariadb_dashboard
+    #     environment:
+    #         - MYSQL_ALLOW_EMPTY_PASSWORD=1
+
+# networks:
+#     default:
+#         driver: bridge

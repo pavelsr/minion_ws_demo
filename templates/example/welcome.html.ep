@@ -1,0 +1,9 @@
+% layout 'default';
+% title 'Welcome';
+
+<form action="/start_task">
+    <input type="submit" value="do_something_slow" onclick="ajax_submit(); return false;" />
+</form>
+
+<script type="text/javascript" src="ws.js"></script>
+<script type="text/javascript" src="submit.js"></script>
